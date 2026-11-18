@@ -12,6 +12,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
+  @font-face {
+    font-family: "Folkard";
+    src: url("folkard.ttf") format("truetype"), url("Folkard.ttf") format("truetype");
+    font-display: swap;
+  }
   :root {
     --paper: #e9dcc0; --paper2: #e1d1b0; --ink: #2a2016; --ink2: #5b4a36; --faded: #8a765a;
     --rule: #c8b48e; --rubric: #8b2a1c;
@@ -31,15 +36,22 @@
   /* ---------- Entrée ---------- */
   #gate {
     position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
-    text-align: center; background: #0d0b09; color: #d9ccb0; cursor: pointer;
+    text-align: center; background: #0d0b09; color: #d9ccb0;
     transition: opacity 1.1s ease .25s, visibility 0s linear 1.4s;
   }
   #gate.open { opacity: 0; visibility: hidden; }
   .gate-inner { padding: 30px; animation: appear 2.2s ease both; }
   @keyframes appear { from { opacity: 0; letter-spacing: .25em; } to { opacity: 1; } }
-  .gate-title { font-family: "IM Fell English SC", serif; font-size: 46px; margin: 0; font-weight: 400; letter-spacing: .06em; color: #e6dbc2; }
+  .gate-title { font-family: "Folkard", "IM Fell English", serif; font-size: 46px; margin: 0; font-weight: 400; letter-spacing: .06em; color: #e6dbc2; }
   .gate-rule { width: 120px; height: 1px; margin: 16px auto; background: linear-gradient(90deg, transparent, #8a765a, transparent); }
   .gate-sub { font-family: "IM Fell English", serif; font-style: italic; font-size: 19px; color: #9c8b6e; margin: 0; }
+  .gate-line {
+    display: block; margin: 50px auto 0; max-width: 320px; background: none; border: 1px solid #5f5341;
+    padding: 14px 22px; color: #e6dbc2; font-family: "IM Fell English", serif; font-style: italic; font-size: 21px; line-height: 1.25;
+    animation: breathe 3s ease-in-out infinite 2.2s; transition: border-color .3s;
+  }
+  .gate-line:active { border-color: #c9b58e; }
+  .gate-who { margin-top: 8px; font-family: "IM Fell English SC", serif; font-size: 14px; letter-spacing: .12em; color: #7d6d55; }
   .gate-hint { margin-top: 56px; font-family: "IM Fell English SC", serif; font-size: 15px; letter-spacing: .2em; color: #7d6d55; animation: breathe 3s ease-in-out infinite 2.2s; }
   .gate-quiet { margin-top: 14px; font-size: 15px; font-style: italic; color: #5f5341; background: none; border: 0; font-family: inherit; text-decoration: underline; text-underline-offset: 3px; }
   @keyframes breathe { 50% { opacity: .4; } }
@@ -57,7 +69,7 @@
     background: linear-gradient(var(--paper) 88%, rgba(233,220,192,0));
   }
   .masthead { text-align: center; }
-  h1 { margin: 0; font-family: "IM Fell English SC", serif; font-weight: 400; font-size: 34px; letter-spacing: .05em; color: var(--ink); }
+  h1 { margin: 0; font-family: "Folkard", "IM Fell English", serif; font-weight: 400; font-size: 34px; letter-spacing: .05em; color: var(--ink); }
   .ornament { display: flex; align-items: center; gap: 10px; justify-content: center; color: var(--rubric); margin: 4px 0 2px; }
   .ornament::before, .ornament::after { content: ""; height: 1px; width: 70px; background: var(--ink2); opacity: .45; }
   .ornament span { font-size: 12px; }
@@ -89,7 +101,7 @@
   }
   @keyframes ink { from { opacity: 0; } }
   .txt { flex: 1; min-width: 0; }
-  .title { font-family: "IM Fell English", serif; font-size: 21px; line-height: 1.2; }
+  .title { font-family: "Folkard", "IM Fell English", serif; font-size: 21px; line-height: 1.2; }
   .title::first-letter { color: var(--rubric); }
   .meta { font-size: 14.5px; color: var(--ink2); margin-top: 3px; }
   .meta .who { font-family: "IM Fell English SC", serif; color: var(--rubric); letter-spacing: .03em; }
@@ -112,6 +124,22 @@
   .empty { display: block; text-align: center; font-family: "IM Fell English", serif; font-style: italic; color: var(--faded); font-size: 19px; padding: 40px 10px; border: 0; }
   .colophon { text-align: center; font-family: "IM Fell English", serif; font-style: italic; color: var(--faded); font-size: 13px; padding: 0 20px 40px; }
 
+  /* Lettrines enluminées */
+  .lettrine { float: left; margin: 2px 10px 0 0; filter: drop-shadow(0 1px 0 rgba(80,50,20,.25)); }
+  .lettrine.big { margin: 0 6px 0 0; float: none; display: inline-block; vertical-align: middle; }
+  h1 { display: flex; align-items: center; justify-content: center; }
+  h1 .rest { padding-top: 10px; }
+  li.illum .txt { min-height: 54px; }
+  li.illum .title::first-letter { color: inherit; }
+  li.illum .title { font-size: 22px; }
+
+  /* Vignettes gravées */
+  .vignette { display: flex; flex-direction: column; align-items: center; padding: 22px 0 14px; border-bottom: 1px solid var(--rule); animation: ink .6s ease both; }
+  .vignette svg { width: 210px; height: auto; color: var(--ink); opacity: .82; }
+  .vignette .cap { font-family: "IM Fell English", serif; font-style: italic; color: var(--faded); font-size: 14px; margin-top: 6px; }
+  .banner-top { display: block; margin: 2px auto 8px; width: 78%; max-width: 330px; height: auto; }
+  .castle-top { display: block; margin: 0 auto 2px; width: 120px; color: var(--ink); opacity: .75; }
+
   #toast {
     position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 24px); z-index: 20;
     transform: translate(-50%, 20px); opacity: 0; transition: .35s; white-space: nowrap;
@@ -128,16 +156,117 @@
     <h2 class="gate-title">Répliques</h2>
     <div class="gate-rule"></div>
     <p class="gate-sub">de la Table Ronde</p>
-    <div class="gate-hint">Touchez pour entrer</div>
+    <button class="gate-line" id="enter">Touchez pour entrer</button>
+    <div class="gate-who" id="enterWho">&nbsp;</div>
     <button class="gate-quiet" id="quiet">entrer sans le son</button>
   </div>
 </div>
-<div id="flash"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="castle" viewBox="0 0 240 70">
+      <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">
+        <path d="M4 66 H236"/>
+        <path d="M14 66 C40 60 60 62 80 64 M160 64 C180 62 200 60 226 66" stroke-width=".8"/>
+        <path d="M70 66 V34 h6 v-5 h5 v5 h6 v-5 h5 v5 h6 V66"/>
+        <path d="M98 66 V22 h5 v-6 h5 v6 h5 v-6 h5 v6 h5 v-6 h5 v6 h5 V66"/>
+        <path d="M133 66 V34 h6 v-5 h5 v5 h6 v-5 h5 v5 h6 V66"/>
+        <path d="M108 66 v-12 a6 6 0 0 1 12 0 v12" />
+        <path d="M84 44 v6 M146 44 v6 M114 30 v6 M116 30 v6" stroke-width="1.8"/>
+        <path d="M117 16 V2 l12 4 -12 4" fill="currentColor" fill-opacity=".85"/>
+        <path d="M78 29 V20 l8 3 -8 3 M147 29 V20 l8 3 -8 3"/>
+        <path d="M100 56 h28 M100 48 h6 M122 48 h6 M74 58 h8 M140 58 h8" stroke-width=".6"/>
+      </g>
+    </symbol>
+    <symbol id="knight" viewBox="0 0 220 120">
+      <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 114 H214" />
+        <path d="M30 114 c20 -4 40 -3 60 -1 M130 113 c25 -3 45 -2 70 1" stroke-width=".7"/>
+        <!-- cheval -->
+        <path d="M62 74 C66 60 84 56 104 58 C122 60 136 58 146 50 C150 46 154 40 158 36 L170 34 C174 36 176 40 174 44 L166 48 C162 56 158 64 152 70 C146 78 134 82 118 82 C100 84 80 84 70 82 C64 80 60 78 62 74 Z" fill="currentColor" fill-opacity=".1"/>
+        <path d="M70 82 L64 98 L58 112 M80 84 L82 98 L76 112 M132 82 L140 96 L148 112 M146 76 L156 92 L160 112"/>
+        <path d="M62 74 C50 76 44 86 40 98" />
+        <path d="M158 36 L160 28 L164 34" />
+        <!-- caparaçon -->
+        <path d="M84 60 C82 72 84 84 92 92 L104 86 L116 92 L128 84 C132 74 130 66 128 60" fill="currentColor" fill-opacity=".18"/>
+        <path d="M92 70 h4 M104 72 h4 M116 70 h4" stroke-width="2.2"/>
+        <!-- cavalier -->
+        <path d="M100 58 C98 46 100 36 106 30 L116 30 C120 38 120 48 118 58" fill="currentColor" fill-opacity=".14"/>
+        <path d="M104 30 C102 20 108 14 112 14 C118 14 122 20 120 30 Z" fill="currentColor" fill-opacity=".35"/>
+        <path d="M108 22 h10" stroke-width="1"/>
+        <path d="M112 14 C110 8 114 4 118 6" />
+        <path d="M108 58 L104 72 L110 74" />
+        <!-- bouclier -->
+        <path d="M94 36 C94 46 98 54 104 58 C110 54 112 46 112 36 Z" fill="var(--paper)"/>
+        <path d="M103 38 V54 M97 44 H109" stroke="var(--rubric)" stroke-width="2.2"/>
+        <!-- lance -->
+        <path d="M118 40 L210 18" stroke-width="2"/>
+        <path d="M150 33 l6 -5 2 4 z" fill="var(--rubric)" stroke="var(--rubric)"/>
+      </g>
+    </symbol>
+    <symbol id="peasant" viewBox="0 0 220 120">
+      <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 114 H214"/>
+        <!-- gerbes de blé -->
+        <g stroke-width="1.1">
+          <path d="M150 114 L156 70 M156 114 L158 68 M162 114 L160 70 M168 114 L163 72"/>
+          <path d="M156 70 c-3 -4 -3 -8 0 -12 M158 68 c3 -4 3 -8 0 -12 M160 70 c4 -3 6 -6 6 -10 M163 72 c-5 -2 -8 -5 -9 -9"/>
+          <path d="M152 92 c4 2 10 2 14 0" stroke="var(--rubric)" stroke-width="1.6"/>
+          <path d="M186 114 L190 78 M192 114 L192 76 M198 114 L194 78"/>
+          <path d="M190 78 c-3 -4 -3 -8 0 -11 M192 76 c3 -4 3 -8 0 -11 M194 78 c4 -3 5 -6 5 -9"/>
+          <path d="M187 98 c4 2 9 2 12 0" stroke="var(--rubric)" stroke-width="1.6"/>
+        </g>
+        <!-- paysan -->
+        <path d="M70 46 C64 52 62 64 64 76 L60 100 H96 L92 76 C94 64 92 52 86 46 Z" fill="currentColor" fill-opacity=".12"/>
+        <path d="M62 100 h36" stroke-width="1"/>
+        <path d="M70 100 L68 112 M86 100 L88 112"/>
+        <path d="M64 112 h8 M84 112 h8" stroke-width="2"/>
+        <path d="M66 78 C74 80 84 80 92 78" stroke-width="1.8"/>
+        <path d="M72 46 C68 38 70 28 78 26 C86 28 88 38 84 46 Z" fill="currentColor" fill-opacity=".3"/>
+        <path d="M76 36 a3 3 0 0 0 6 0" />
+        <path d="M70 34 C64 30 66 22 78 20 C90 22 92 30 86 34" />
+        <!-- bras et fourche -->
+        <path d="M86 52 L104 62 L112 58"/>
+        <path d="M70 54 L62 68 L74 70"/>
+        <path d="M118 112 L106 20" stroke-width="2"/>
+        <path d="M100 22 L98 6 M106 20 L104 4 M112 18 L110 4 M98 22 L113 18" stroke-width="1.6"/>
+        <!-- panier -->
+        <path d="M30 100 h24 l-3 14 h-18 z" fill="currentColor" fill-opacity=".15"/>
+        <path d="M32 106 h20 M34 110 h16" stroke-width=".7"/>
+        <path d="M34 100 c2 -10 14 -10 16 0"/>
+      </g>
+    </symbol>
+    <symbol id="jester" viewBox="0 0 220 120">
+      <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 114 H214"/>
+        <!-- deux convives à table -->
+        <path d="M40 80 H180" stroke-width="2"/>
+        <path d="M50 80 L46 114 M170 80 L174 114"/>
+        <path d="M40 80 c10 6 130 6 140 0" stroke-width=".8"/>
+        <path d="M70 66 c0 -6 12 -6 12 0 v14 h-12 z" fill="currentColor" fill-opacity=".15"/>
+        <path d="M82 70 c5 0 5 7 0 7"/>
+        <path d="M100 74 c0 -8 22 -8 22 0 v6 h-22 z" fill="currentColor" fill-opacity=".2"/>
+        <path d="M128 68 l8 0 l-2 12 h-4 z" fill="var(--rubric)" fill-opacity=".6"/>
+        <!-- convive gauche -->
+        <path d="M22 80 C20 64 24 52 32 48 C40 52 42 64 40 80 Z" fill="currentColor" fill-opacity=".12"/>
+        <circle cx="31" cy="40" r="7" fill="currentColor" fill-opacity=".25"/>
+        <path d="M24 36 l7 -8 7 8" fill="var(--rubric)" fill-opacity=".7"/>
+        <path d="M38 58 L60 70"/>
+        <!-- convive droit -->
+        <path d="M180 80 C178 64 182 52 190 48 C198 52 200 64 198 80 Z" fill="currentColor" fill-opacity=".12"/>
+        <circle cx="189" cy="40" r="7" fill="currentColor" fill-opacity=".25"/>
+        <path d="M182 58 L160 66"/>
+        <path d="M162 62 c-4 -4 -2 -10 2 -12"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
 
 <div class="wrap">
   <header>
     <div class="masthead">
-      <h1>Répliques</h1>
+      <img class="banner-top" src="raisin.png" alt="J'aime le raisin de table">
+      <h1><span id="bigL"></span><span class="rest">épliques</span></h1>
       <div class="ornament"><span>✠</span></div>
       <p class="subtitle">recueil des paroles mémorables</p>
     </div>
@@ -167,57 +296,25 @@ const $ = id => document.getElementById(id);
 try { favs = new Set(JSON.parse(localStorage.getItem("favs") || "[]")); } catch (e) {}
 const saveFavs = () => { try { localStorage.setItem("favs", JSON.stringify([...favs])); } catch (e) {} };
 
-/* ---------- Deux lames qui se croisent (son synthétisé) ---------- */
-function swordClash() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const out = ctx.createGain(); out.gain.value = .55; out.connect(ctx.destination);
-    const noise = dur => {
-      const b = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate), d = b.getChannelData(0);
-      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-      const s = ctx.createBufferSource(); s.buffer = b; return s;
-    };
-    const t = ctx.currentTime + .03;
-
-    // Frottement des lames l'une contre l'autre
-    const scrape = noise(.22), bp = ctx.createBiquadFilter(), sg = ctx.createGain();
-    bp.type = "bandpass"; bp.Q.value = 6;
-    bp.frequency.setValueAtTime(2500, t); bp.frequency.exponentialRampToValueAtTime(7000, t + .18);
-    sg.gain.setValueAtTime(0, t); sg.gain.linearRampToValueAtTime(.35, t + .1); sg.gain.linearRampToValueAtTime(0, t + .2);
-    scrape.connect(bp); bp.connect(sg); sg.connect(out); scrape.start(t);
-
-    // Choc : claquement bref
-    const hit = t + .17;
-    const click = noise(.05), hp = ctx.createBiquadFilter(), cg = ctx.createGain();
-    hp.type = "highpass"; hp.frequency.value = 1800;
-    cg.gain.setValueAtTime(.9, hit); cg.gain.exponentialRampToValueAtTime(.001, hit + .05);
-    click.connect(hp); hp.connect(cg); cg.connect(out); click.start(hit);
-
-    // Résonance de l'acier : partiels inharmoniques qui s'éteignent
-    [[1390, .22, 1.6], [2210, .2, 1.3], [3170, .16, 1.0], [4350, .12, .8], [5980, .08, .6], [7720, .05, .4]]
-      .forEach(([f, v, dur]) => {
-        const o = ctx.createOscillator(), g = ctx.createGain();
-        o.type = "sine"; o.frequency.setValueAtTime(f * 1.004, hit); o.frequency.exponentialRampToValueAtTime(f, hit + .3);
-        g.gain.setValueAtTime(0, hit); g.gain.linearRampToValueAtTime(v, hit + .004); g.gain.exponentialRampToValueAtTime(.0005, hit + dur);
-        const trem = ctx.createOscillator(), tg = ctx.createGain(); trem.frequency.value = 7 + Math.random() * 5; tg.gain.value = v * .25;
-        trem.connect(tg); tg.connect(g.gain);
-        o.connect(g); g.connect(out); o.start(hit); o.stop(hit + dur + .05); trem.start(hit); trem.stop(hit + dur + .05);
-      });
-    return (hit - ctx.currentTime) * 1000;
-  } catch (e) { return 0; }
+/* ---------- Entrée : une réplique de Léodagan, jouée à l'ouverture ---------- */
+let opened = false, gateSound = null;
+function pickGate() {
+  const leo = sounds.filter(x => norm(x.character).includes("leodagan"));
+  gateSound = (leo.length ? leo : sounds)[Math.floor(Math.random() * (leo.length || sounds.length))];
+  if (gateSound && $("enter")) {
+    $("enter").textContent = "« " + gateSound.title + " »";
+    $("enterWho").textContent = gateSound.character;
+  }
 }
-
-let opened = false;
 function openGate(withSound) {
   if (opened) return; opened = true;
-  const delay = withSound ? swordClash() : 0;
-  setTimeout(() => {
-    if (withSound) { $("flash").classList.add("go"); document.body.classList.add("shake"); }
-    $("gate").classList.add("open");
-  }, Math.max(0, delay));
   try { sessionStorage.setItem("in", "1"); } catch (e) {}
+  if (withSound && gateSound) {
+    try { const a = new Audio(BASE + encodeURIComponent(gateSound.file)); a.play().catch(() => {}); } catch (e) {}
+  }
+  setTimeout(() => $("gate").classList.add("open"), withSound ? 350 : 0);
 }
-$("gate").addEventListener("click", e => { if (e.target.id !== "quiet") openGate(true); });
+$("enter").addEventListener("click", () => openGate(true));
 $("quiet").addEventListener("click", () => openGate(false));
 try { if (sessionStorage.getItem("in")) $("gate").remove(); } catch (e) {}
 
@@ -247,6 +344,37 @@ function score(it, q) {
   return total;
 }
 
+/* ---------- Lettrines enluminées ---------- */
+const VINE = "M8 50 c6 -8 14 -2 10 4 c-3 4 -8 0 -5 -3 M50 8 c8 6 2 14 -4 10 c-4 -3 0 -8 3 -5 M50 50 c-6 8 -14 2 -10 -4 c3 -4 8 0 5 3 M8 8 c-2 9 5 12 9 7 c2 -4 -3 -6 -4 -3";
+function lettrine(ch, size, big) {
+  const L = (ch || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().replace(/[^A-Z0-9]/, "") || "✠";
+  const grounds = [["#8b2a1c", "#2f4a78"], ["#2f4a78", "#8b2a1c"], ["#3d5a32", "#8b2a1c"]];
+  const [g, accent] = grounds[L.charCodeAt(0) % grounds.length];
+  return `<svg class="lettrine${big ? " big" : ""}" width="${size}" height="${size * (big ? 1 : 1.25)}" viewBox="0 0 58 ${big ? 58 : 72}" aria-hidden="true">
+    <rect x="1" y="1" width="56" height="56" fill="#b8892f"/>
+    <rect x="3.5" y="3.5" width="51" height="51" fill="${g}"/>
+    <path d="${VINE}" stroke="#f1dfa8" stroke-width="1" fill="none" opacity=".55"/>
+    <circle cx="6.5" cy="29" r="1.6" fill="#f1dfa8" opacity=".7"/><circle cx="51.5" cy="29" r="1.6" fill="#f1dfa8" opacity=".7"/>
+    <circle cx="29" cy="6.5" r="1.6" fill="#f1dfa8" opacity=".7"/><circle cx="29" cy="51.5" r="1.6" fill="#f1dfa8" opacity=".7"/>
+    <text x="29" y="43" text-anchor="middle" font-family="Folkard, IM Fell English, serif" font-size="40" fill="#f6e7b8" stroke="${accent}" stroke-width=".6">${L}</text>
+    ${big ? "" : `<path d="M8 57 c-2 6 2 10 6 9 c3 -1 2 -5 -1 -4" stroke="#8b2a1c" stroke-width="1.2" fill="none"/>
+    <path d="M14 66 c6 3 14 2 18 -2" stroke="#8b2a1c" stroke-width=".9" fill="none"/>
+    <circle cx="34" cy="63" r="1.6" fill="#b8892f"/>`}
+  </svg>`;
+}
+const VIGNETTES = [
+  ["knight", "Un chevalier part en quête"],
+  ["peasant", "Aux champs, loin des intrigues de la cour"],
+  ["jester", "Le banquet, où tout finit par se dire"],
+  ["castle", "La forteresse"]
+];
+function vignette(i) {
+  const [id, cap] = VIGNETTES[i % VIGNETTES.length];
+  const li = document.createElement("li"); li.className = "vignette";
+  li.innerHTML = `<svg viewBox="${id === "castle" ? "0 0 240 70" : "0 0 220 120"}"><use href="#${id}"/></svg><div class="cap">${cap}</div>`;
+  return li;
+}
+
 /* ---------- Affichage ---------- */
 const ICON_PLAY = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg>';
 const ICON_SEND = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7.5 7.5L12 3l4.5 4.5M5 13v6h14v-6"/></svg>';
@@ -274,6 +402,7 @@ function render() {
   const ul = $("list"); ul.innerHTML = "";
   if (!res.length) {
     ul.innerHTML = `<li class="empty">${onlyFavs && !favs.size ? "Aucun favori pour l'heure. Touchez ☆ à côté d'une réplique." : "Rien de tel dans les archives."}</li>`;
+    ul.appendChild(vignette(0));
     return;
   }
   res.slice(0, 250).forEach((s, i) => {
@@ -284,13 +413,18 @@ function render() {
       <div class="txt"><div class="title"></div><div class="meta"><span class="who"></span> · <span class="ep"></span></div></div>
       <button class="btn play" aria-label="Écouter">${playingKey === s.file ? BARS : ICON_PLAY}</button>
       <button class="btn send" aria-label="Envoyer">${ICON_SEND}</button>`;
-    li.querySelector(".title").textContent = s.title;
+    if (i % 9 === 0 && /^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ]/.test(s.title.trim())) {
+      li.classList.add("illum");
+      li.querySelector(".txt").insertAdjacentHTML("afterbegin", lettrine(s.title.trim()[0], 46));
+      li.querySelector(".title").textContent = s.title.trim().slice(1);
+    } else li.querySelector(".title").textContent = s.title;
     li.querySelector(".who").textContent = s.character;
     li.querySelector(".ep").textContent = s.episode;
     li.querySelector(".fav").onclick = e => toggleFav(s, e.currentTarget);
     li.querySelector(".play").onclick = e => play(s, e.currentTarget, li);
     li.querySelector(".send").onclick = e => send(s, e.currentTarget);
     ul.appendChild(li);
+    if (i > 0 && i % 12 === 11 && i < res.length - 1) ul.appendChild(vignette(Math.floor(i / 12)));
   });
 }
 
@@ -344,6 +478,7 @@ $("randomBtn").onclick = () => {
   $("q").value = s.title; buildChips(); render();
   const li = $("list").querySelector("li"); if (li) play(s, li.querySelector(".play"), li);
 };
+$("bigL").innerHTML = lettrine("R", 52, true);
 let deb;
 $("q").addEventListener("input", () => { clearTimeout(deb); deb = setTimeout(render, 120); });
 
@@ -351,7 +486,7 @@ fetch(BASE + "sounds.json")
   .then(r => r.json())
   .then(data => {
     sounds = data.map(s => { const n = norm(`${s.title} ${s.character} ${s.episode}`); return { ...s, _n: n, _w: n.split(" ") }; });
-    buildChips(); render();
+    buildChips(); render(); pickGate();
   })
   .catch(() => $("status").textContent = "Les parchemins n'ont pu être chargés. Vérifiez votre connexion.");
 </script>
