@@ -45,6 +45,17 @@
   .gate-title { font-family: "Folkard", "IM Fell English", serif; font-size: 46px; margin: 0; font-weight: 400; letter-spacing: .06em; color: #e6dbc2; }
   .gate-rule { width: 120px; height: 1px; margin: 16px auto; background: linear-gradient(90deg, transparent, #8a765a, transparent); }
   .gate-sub { font-family: "IM Fell English", serif; font-style: italic; font-size: 19px; color: #9c8b6e; margin: 0; }
+  .gate-btn {
+    display: inline-flex; align-items: center; gap: 4px; margin: 52px auto 0; cursor: pointer;
+    padding: 12px 26px 12px 12px; background: #1a1511;
+    border: 1px solid #c9a24e; outline: 1px solid rgba(201,162,78,.45); outline-offset: 5px;
+    box-shadow: 0 0 0 1px #2a2220 inset, 0 0 28px rgba(201,162,78,.18);
+    animation: glowpulse 2.6s ease-in-out infinite 1.6s; transition: transform .15s, box-shadow .3s;
+  }
+  .gate-btn:active { transform: scale(.97); box-shadow: 0 0 0 1px #2a2220 inset, 0 0 40px rgba(201,162,78,.4); }
+  .gate-btn .lettrine { float: none; margin: 0; }
+  .gate-word { font-family: "IM Fell English", serif; font-size: 34px; color: #efe4c8; letter-spacing: .03em; padding-top: 6px; }
+  @keyframes glowpulse { 50% { box-shadow: 0 0 0 1px #2a2220 inset, 0 0 36px rgba(201,162,78,.38); } }
   .gate-line {
     display: block; margin: 50px auto 0; max-width: 320px; background: none; border: 1px solid #5f5341;
     padding: 14px 22px; color: #e6dbc2; font-family: "IM Fell English", serif; font-style: italic; font-size: 21px; line-height: 1.25;
@@ -152,9 +163,7 @@
     <h2 class="gate-title">Répliques</h2>
     <div class="gate-rule"></div>
     <p class="gate-sub">de la Table Ronde</p>
-    <button class="gate-line" id="enter">Touchez pour entrer</button>
-    <div class="gate-who" id="enterWho">&nbsp;</div>
-    <button class="gate-quiet" id="quiet">entrer sans le son</button>
+    <button class="gate-btn" id="enter"><span id="enterL"></span><span class="gate-word">ntrer</span></button>
   </div>
 </div>
 
@@ -197,10 +206,7 @@ let opened = false, gateSound = null;
 function pickGate() {
   const leo = sounds.filter(x => norm(x.character).includes("leodagan"));
   gateSound = (leo.length ? leo : sounds)[Math.floor(Math.random() * (leo.length || sounds.length))];
-  if (gateSound && $("enter")) {
-    $("enter").textContent = "« " + gateSound.title + " »";
-    $("enterWho").textContent = gateSound.character;
-  }
+
 }
 function openGate(withSound) {
   if (opened) return; opened = true;
@@ -211,7 +217,6 @@ function openGate(withSound) {
   setTimeout(() => $("gate").classList.add("open"), withSound ? 350 : 0);
 }
 $("enter").addEventListener("click", () => openGate(true));
-$("quiet").addEventListener("click", () => openGate(false));
 try { if (sessionStorage.getItem("in")) $("gate").remove(); } catch (e) {}
 
 /* ---------- Recherche tolérante ---------- */
@@ -388,6 +393,7 @@ $("randomBtn").onclick = () => {
   const li = $("list").querySelector("li"); if (li) play(s, li.querySelector(".play"), li);
 };
 $("bigL").innerHTML = lettrine("R", 58, true);
+if ($("enterL")) $("enterL").innerHTML = lettrine("E", 58, true);
 let deb;
 $("q").addEventListener("input", () => { clearTimeout(deb); deb = setTimeout(render, 120); });
 
