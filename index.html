@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Kaamelott">
+<title>Kaamelott</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, system-ui, sans-serif;
+    background: #15120e; color: #f3ead8;
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  }
+  header {
+    position: sticky; top: 0; z-index: 2; background: #15120e;
+    padding: 14px 16px 10px; border-bottom: 1px solid #2c261d;
+  }
+  h1 { margin: 0 0 10px; font-size: 22px; color: #d9a441; letter-spacing: .5px; }
+  input {
+    width: 100%; font-size: 17px; padding: 12px 14px; border-radius: 12px;
+    border: 1px solid #3a3226; background: #221d16; color: #f3ead8; outline: none;
+  }
+  #status { font-size: 13px; color: #9a8f7c; margin-top: 8px; }
+  ul { list-style: none; margin: 0; padding: 0 0 40px; }
+  li {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; border-bottom: 1px solid #241f18;
+  }
+  .txt { flex: 1; min-width: 0; }
+  .title { font-size: 16px; font-weight: 600; }
+  .meta { font-size: 12.5px; color: #9a8f7c; margin-top: 2px; }
+  button {
+    border: 0; border-radius: 50%; width: 44px; height: 44px; flex: none;
+    font-size: 18px; background: #2c261d; color: #f3ead8;
+  }
+  button.send { background: #d9a441; color: #15120e; }
+  button:disabled { opacity: .5; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Kaamelott</h1>
+  <input id="q" type="search" placeholder="Rechercher (ex. pas faux, perceval, boude)" autocomplete="off" autocorrect="off" spellcheck="false">
+  <div id="status">Chargement des répliques…</div>
+</header>
+<ul id="list"></ul>
+
+<script>
+const BASE = "https://raw.githubusercontent.com/2ec0b4/kaamelott-soundboard/master/sounds/";
+let sounds = [];
+let player = null, playingBtn = null;
+
+const norm = s => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "")
+  .toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+
+function lev(a, b) {
+  if (Math.abs(a.length - b.length) > 2) return 9;
+  const d = Array.from({length: a.length + 1}, (_, i) => [i]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++)
+    for (let j = 1; j <= b.length; j++)
+      d[i][j] = Math.min(d[i-1][j] + 1, d[i][j-1] + 1,
+        d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+  return d[a.length][b.length];
+}
+
+// Score : 0 = pas de correspondance. Tolère accents, majuscules et fautes de frappe.
+function score(item, q) {
+  if (!q) return 1;
+  const hay = item._n;
+  if (hay.includes(q)) return 100;
+  const words = item._w;
+  let total = 0;
+  for (const qw of q.split(" ")) {
+    let best = 0;
+    const tol = qw.length >= 7 ? 2 : qw.length >= 4 ? 1 : 0;
+    for (const w of words) {
+      if (w.startsWith(qw)) { best = Math.max(best, 10); continue; }
+      if (qw.length >= 4 && w.startsWith(qw.slice(0, 4)) && lev(qw, w.slice(0, qw.length)) <= tol) best = Math.max(best, 7);
+      else if (tol && lev(qw, w) <= tol) best = Math.max(best, 6);
+    }
+    if (!best) return 0;
+    total += best;
+  }
+  return total;
+}
+
+function render() {
+  const q = norm(document.getElementById("q").value);
+  const res = sounds.map(s => [score(s, q), s]).filter(r => r[0] > 0)
+    .sort((a, b) => b[0] - a[0]).map(r => r[1]);
+  document.getElementById("status").textContent =
+    res.length ? `${res.length} réplique${res.length > 1 ? "s" : ""}` : "Aucune réplique trouvée";
+  const ul = document.getElementById("list");
+  ul.innerHTML = "";
+  for (const s of res.slice(0, 200)) {
+    const li = document.createElement("li");
+    li.innerHTML = `<div class="txt"><div class="title"></div><div class="meta"></div></div>
+      <button class="play" aria-label="Écouter">▶︎</button>
+      <button class="send" aria-label="Envoyer">↑</button>`;
+    li.querySelector(".title").textContent = s.title;
+    li.querySelector(".meta").textContent = `${s.character} · ${s.episode}`;
+    li.querySelector(".play").onclick = e => play(s, e.currentTarget);
+    li.querySelector(".send").onclick = e => send(s, e.currentTarget);
+    ul.appendChild(li);
+  }
+}
+
+function play(s, btn) {
+  if (player) { player.pause(); if (playingBtn) playingBtn.textContent = "▶︎"; }
+  if (playingBtn === btn) { playingBtn = null; return; }
+  player = new Audio(BASE + encodeURIComponent(s.file));
+  playingBtn = btn; btn.textContent = "■";
+  player.onended = () => { btn.textContent = "▶︎"; playingBtn = null; };
+  player.play().catch(() => { btn.textContent = "▶︎"; playingBtn = null; });
+}
+
+async function send(s, btn) {
+  const url = BASE + encodeURIComponent(s.file);
+  btn.disabled = true;
+  try {
+    const blob = await (await fetch(url)).blob();
+    const name = s.title.replace(/[\\/:*?"<>|]/g, "").slice(0, 60) + ".mp3";
+    const file = new File([blob], name, { type: "audio/mpeg" });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file] });
+    } else if (navigator.share) {
+      await navigator.share({ title: s.title, url });
+    } else {
+      location.href = url;
+    }
+  } catch (e) {
+    if (e.name !== "AbortError") alert("Impossible d'envoyer ce son.");
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+fetch(BASE + "sounds.json")
+  .then(r => r.json())
+  .then(data => {
+    sounds = data.map(s => {
+      const n = norm(`${s.title} ${s.character} ${s.episode}`);
+      return { ...s, _n: n, _w: n.split(" ") };
+    });
+    render();
+  })
+  .catch(() => document.getElementById("status").textContent = "Impossible de charger la liste. Vérifie ta connexion.");
+
+let t;
+document.getElementById("q").addEventListener("input", () => { clearTimeout(t); t = setTimeout(render, 120); });
+</script>
+</body>
+</html>
