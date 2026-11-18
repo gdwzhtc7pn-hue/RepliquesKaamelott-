@@ -10,13 +10,8 @@
 <title>Répliques</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  @font-face {
-    font-family: "Folkard";
-    src: url("folkard.ttf") format("truetype"), url("Folkard.ttf") format("truetype");
-    font-display: swap;
-  }
   :root {
     --paper: #d8c49c; --paper2: #cdb68a; --ink: #261b11; --ink2: #523f2b; --faded: #7a6548;
     --rule: #b59c6f; --rubric: #8b2a1c;
@@ -50,7 +45,7 @@
     display: block; width: 74vw; max-width: 360px; height: auto; margin: 0 auto;
     filter: drop-shadow(0 0 2px rgba(120,80,20,.9)) drop-shadow(0 0 14px rgba(150,100,30,.55)) drop-shadow(0 0 34px rgba(120,80,20,.35));
   }
-  .gate-title { font-family: "Folkard", "IM Fell English", serif; font-size: 46px; margin: 0; font-weight: 400; letter-spacing: .06em; color: #e6dbc2; }
+  .gate-title { font-family: "Uncial Antiqua", "IM Fell English", serif; font-size: 46px; margin: 0; font-weight: 400; letter-spacing: .06em; color: #e6dbc2; }
   .gate-rule { width: 120px; height: 1px; margin: 16px auto; background: linear-gradient(90deg, transparent, #8a765a, transparent); }
   .gate-sub { font-family: "IM Fell English", serif; font-style: italic; font-size: 19px; color: #9c8b6e; margin: 0; }
   .gate-btn {
@@ -61,11 +56,6 @@
   }
   .gate-btn svg { position: absolute; inset: 0; width: 100%; height: 100%; }
   .gate-btn:active { transform: scale(.96); }
-  .gate-word {
-    position: relative; display: block; padding-bottom: 7px;
-    font-family: "Folkard", "IM Fell English", serif; font-size: 25px; letter-spacing: .08em; color: #e6cf94;
-    text-shadow: 0 0 8px rgba(160,110,30,.5);
-  }
   @keyframes glowpulse { 50% { filter: drop-shadow(0 0 18px rgba(170,115,35,.55)); } }
   .gate-line {
     display: block; margin: 50px auto 0; max-width: 320px; background: none; border: 1px solid #5f5341;
@@ -73,8 +63,8 @@
     animation: breathe 3s ease-in-out infinite 2.2s; transition: border-color .3s;
   }
   .gate-line:active { border-color: #c9b58e; }
-  .gate-who { margin-top: 8px; font-family: "IM Fell English SC", serif; font-size: 14px; letter-spacing: .12em; color: #7d6d55; }
-  .gate-hint { margin-top: 56px; font-family: "IM Fell English SC", serif; font-size: 15px; letter-spacing: .2em; color: #7d6d55; animation: breathe 3s ease-in-out infinite 2.2s; }
+  .gate-who { margin-top: 8px; font-family: "Uncial Antiqua", "IM Fell English", serif; font-size: 14px; letter-spacing: .12em; color: #7d6d55; }
+  .gate-hint { margin-top: 56px; font-family: "Uncial Antiqua", "IM Fell English", serif; font-size: 15px; letter-spacing: .2em; color: #7d6d55; animation: breathe 3s ease-in-out infinite 2.2s; }
   .gate-quiet { margin-top: 14px; font-size: 15px; font-style: italic; color: #5f5341; background: none; border: 0; font-family: inherit; text-decoration: underline; text-underline-offset: 3px; }
   @keyframes breathe { 50% { opacity: .4; } }
   #flash { position: fixed; inset: 0; z-index: 60; pointer-events: none; background: #fff8e6; opacity: 0; }
@@ -91,7 +81,7 @@
     background: linear-gradient(var(--paper) 88%, rgba(216,196,156,0));
   }
   .masthead { text-align: center; padding: 6px 20px 4px; }
-  h1 { margin: 0; font-family: "Folkard", "IM Fell English", serif; font-weight: 400; font-size: 34px; letter-spacing: .05em; color: var(--ink); }
+  h1 { margin: 0; font-family: "Uncial Antiqua", "IM Fell English", serif; font-weight: 400; font-size: 34px; letter-spacing: .05em; color: var(--ink); }
   .ornament { display: flex; align-items: center; gap: 10px; justify-content: center; color: var(--rubric); margin: 4px 0 2px; }
   .ornament::before, .ornament::after { content: ""; height: 1px; width: 70px; background: var(--ink2); opacity: .45; }
   .ornament span { font-size: 12px; }
@@ -111,7 +101,7 @@
   .search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); z-index: 1; }
   .tools { display: flex; gap: 18px; justify-content: center; margin: 12px 0 4px; }
   .link {
-    font-family: "IM Fell English SC", serif; font-size: 15px; letter-spacing: .06em;
+    font-family: "Uncial Antiqua", "IM Fell English", serif; font-size: 15px; letter-spacing: .06em;
     background: none; border: 0; padding: 4px 0; color: var(--ink2);
   }
   .link.on { color: var(--rubric); text-decoration: underline; text-underline-offset: 4px; }
@@ -127,10 +117,10 @@
   }
   @keyframes ink { from { opacity: 0; } }
   .txt { flex: 1; min-width: 0; }
-  .title { font-family: "Folkard", "IM Fell English", serif; font-size: 21px; line-height: 1.2; }
+  .title { font-family: "Uncial Antiqua", "IM Fell English", serif; font-size: 18.5px; letter-spacing: .01em; line-height: 1.2; }
   .title::first-letter { color: var(--rubric); }
   .meta { font-size: 14.5px; color: var(--ink2); margin-top: 3px; }
-  .meta .who { font-family: "IM Fell English SC", serif; color: var(--rubric); letter-spacing: .03em; }
+  .meta .who { font-family: "Uncial Antiqua", "IM Fell English", serif; color: var(--rubric); letter-spacing: .03em; }
   .meta .ep { font-style: italic; color: var(--faded); }
   .btn {
     flex: none; width: 40px; height: 40px; border-radius: 50%; padding: 0;
@@ -157,7 +147,7 @@
   h1 .rest { padding-top: 10px; }
   li.illum .txt { min-height: 54px; }
   li.illum .title::first-letter { color: inherit; }
-  li.illum .title { font-size: 22px; }
+  li.illum .title { font-size: 19.5px; }
 
 
   .banner-top { display: block; margin: calc(env(safe-area-inset-top) + 22px) auto 0; width: 80%; max-width: 340px; height: auto; }
@@ -187,8 +177,11 @@
         <!-- corps du ruban, légèrement ondulé -->
         <path d="M34 12 C90 4 170 4 226 12 V50 C170 42 90 42 34 50 Z" fill="url(#rib)" stroke="#c9a24e" stroke-width="1.4"/>
         <path d="M40 17 C92 10 168 10 220 17 M40 45 C92 38 168 38 220 45" fill="none" stroke="#c9a24e" stroke-width=".5" opacity=".55"/>
+        <path id="ribline" d="M44 37 C95 27.5 165 27.5 216 37" fill="none"/>
+        <text font-family="Uncial Antiqua, serif" font-size="23" fill="#e6cf94" letter-spacing="2" style="filter: drop-shadow(0 0 3px rgba(170,115,35,.7))">
+          <textPath href="#ribline" startOffset="50%" text-anchor="middle">Entrer</textPath>
+        </text>
       </svg>
-      <span class="gate-word">Entrer</span>
     </button>
   </div>
 </div>
@@ -203,7 +196,7 @@
   <header>
     <div class="search">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b2a1c" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="Que cherchez-vous ?" autocomplete="off" autocorrect="off" spellcheck="false">
+      <input id="q" type="search" placeholder="Plaît-il ?" autocomplete="off" autocorrect="off" spellcheck="false">
     </div>
     <div class="tools">
       <button class="link" id="randomBtn">Au hasard</button>
@@ -310,8 +303,8 @@ function lettrine(ch, size, big) {
       </g>
       ${bud(14, 14, 3.2)}${bud(50, 50, 3.2)}${bud(51, 21, 2.4)}${bud(13, 45, 2.4)}
     </g>
-    <text x="32.6" y="47" text-anchor="middle" font-family="IM Fell English, serif" font-size="44" fill="#1d1714" opacity=".55">${L}</text>
-    <text x="32" y="46" text-anchor="middle" font-family="IM Fell English, serif" font-size="44" fill="#efe4c8" stroke="#2a2220" stroke-width="1.1" paint-order="stroke">${L}</text>
+    <text x="32.6" y="47" text-anchor="middle" font-family="Uncial Antiqua, IM Fell English, serif" font-size="40" fill="#1d1714" opacity=".55">${L}</text>
+    <text x="32" y="46" text-anchor="middle" font-family="Uncial Antiqua, IM Fell English, serif" font-size="40" fill="#efe4c8" stroke="#2a2220" stroke-width="1.1" paint-order="stroke">${L}</text>
   </svg>`;
 }
 
